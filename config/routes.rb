@@ -1,4 +1,5 @@
-Machinejam::Application.routes.draw do
+MachineJam::Application.routes.draw do
+  root :to => "machines#index"
   resources :machines
 
   # The priority is based upon order of creation:
