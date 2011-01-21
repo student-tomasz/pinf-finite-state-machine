@@ -4,4 +4,4 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
-Machinejam::Application.load_tasks
+MachineJam::Application.load_tasks
