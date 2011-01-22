@@ -14,8 +14,8 @@ ActiveRecord::Schema.define(:version => 20110121225108) do
 
   create_table "machines", :force => true do |t|
     t.string   "name"
-    t.string   "states_json"
-    t.string   "alphabet_json"
+    t.string   "states"
+    t.string   "alphabet"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

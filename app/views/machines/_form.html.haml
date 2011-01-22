@@ -1,0 +1,20 @@
+= form_for(@machine) do |f|
+  - if @machine.errors.any?
+    #error_explanation
+      %h4= "#{pluralize(@machine.errors.count, "error")} prohibited this machine from being saved:"
+      %ul
+        - @machine.errors.full_messages.each do |msg|
+          %li= msg
+  
+  #fields
+    %ol
+      %li
+        = f.label :name
+        = f.text_field :name
+      - [:states, :alphabet].each do |attribute|
+        %li
+          = f.label attribute
+          = f.text_area attribute
+
+  #actions
+    = f.submit 'Continue'

@@ -1,0 +1,13 @@
+!!!
+%html
+  %head
+    %title MachineJam
+    = stylesheet_link_tag :all
+    = javascript_include_tag :all
+    = csrf_meta_tag
+
+  %body
+    %header
+      %h1= link_to 'MachineJam', root_path
+    %section
+      = yield
