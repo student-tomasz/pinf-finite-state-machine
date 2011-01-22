@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110121225108) do
+ActiveRecord::Schema.define(:version => 20110122225115) do
 
   create_table "machines", :force => true do |t|
     t.string   "name"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(:version => 20110121225108) do
     t.string   "alphabet"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "step",       :default => "initialize"
   end
 
 end
