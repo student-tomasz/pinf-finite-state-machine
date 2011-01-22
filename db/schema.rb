@@ -16,9 +16,6 @@ ActiveRecord::Schema.define(:version => 20110121225108) do
     t.string   "name"
     t.string   "states_json"
     t.string   "alphabet_json"
-    t.string   "start_state_json"
-    t.string   "accept_states_json"
-    t.text     "transition_json"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
