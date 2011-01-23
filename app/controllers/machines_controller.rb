@@ -5,25 +5,28 @@ class MachinesController < ApplicationController
 
   def show
     @machine = Machine.find(params[:id])
+    redirect_to edit_machine_path(@machine) unless @machine.completed_step?
   end
 
   def new
     @machine = Machine.dummy.humanize
   end
 
-  def edit
-    @machine = Machine.find(params[:id]).humanize
-  end
-
   def create
     @machine = Machine.new(params['machine']).dehumanize
 
     if @machine.save
-      redirect_to @machine, :notice => 'Machine was successfully created.'
+      @machine.next_step
+      redirect_to edit_machine_path(@machine), :notice => 'Machine was successfully initialized.'
     else
       @machine.humanize
       render :action => "new"
     end
+  end
+
+  def edit
+    @machine = Machine.find(params[:id]).humanize
+    @machine.step = nil if @machine.completed_step?
   end
 
   def update
@@ -33,8 +36,14 @@ class MachinesController < ApplicationController
     @machine.dehumanize
 
     if @machine.save
-      redirect_to @machine, :notice => 'Machine was successfully updated.'
+      @machine.next_step
+      if @machine.completed_step?
+        redirect_to @machine, :notice => 'Machine was successfully updated.'
+      else
+        redirect_to edit_machine_path(@machine)
+      end
     else
+      @machine.humanize
       render :action => "edit"
     end
   end

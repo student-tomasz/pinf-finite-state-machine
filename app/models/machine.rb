@@ -1,6 +1,7 @@
 class Machine < ActiveRecord::Base
 private
   @@serialized_attributes = [:states, :alphabet]
+  @@steps = ['initialize', 'accept', 'complete']
 
 public
   before_save JsonWrapper.new(@@serialized_attributes)
@@ -31,5 +32,27 @@ public
       self.send("#{attribute}=", self.send(attribute).split(" ")) if self.send(attribute).class == String
     end
     self
+  end
+  
+  def step    
+    self[:step] || @@steps.first
+  end
+
+  def step=(value)
+    self[:step] = value
+    self.save
+  end
+
+  def next_step
+    i = @@steps.index(step)
+    self.step = @@steps[i + 1]
+  end
+  
+  def last_step?
+    step == @@steps[-2]
+  end
+  
+  def completed_step?
+    step == @@steps[-1]
   end
 end

@@ -1,0 +1,8 @@
+%ol
+  %li
+    = f.label :name
+    = f.text_field :name
+  - [:states, :alphabet].each do |attribute|
+    %li
+      = f.label attribute
+      = f.text_area attribute

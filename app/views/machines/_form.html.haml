@@ -7,14 +7,7 @@
           %li= msg
   
   #fields
-    %ol
-      %li
-        = f.label :name
-        = f.text_field :name
-      - [:states, :alphabet].each do |attribute|
-        %li
-          = f.label attribute
-          = f.text_area attribute
+    = render "#{@machine.step}_fields", :f => f
 
   #actions
-    = f.submit 'Continue'
+    = f.submit @machine.last_step? ? "Submit" : "Continue"
