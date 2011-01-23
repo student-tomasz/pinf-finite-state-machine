@@ -1,6 +1,6 @@
 class MachinesController < ApplicationController
   def index
-    @machines = Machine.all
+    @machines = Machine.completed
   end
 
   def show

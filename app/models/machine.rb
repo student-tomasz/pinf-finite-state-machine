@@ -12,6 +12,8 @@ public
   validates_presence_of :states
   validates_presence_of :alphabet
   
+  scope :completed, where(:step => @@steps.last)
+  
   def self.dummy
     self.new(
       :name     => 'dummy',
@@ -43,6 +45,6 @@ public
   end
   
   def completed?
-    step == @@steps[-1]
+    step == @@steps.last
   end
 end
