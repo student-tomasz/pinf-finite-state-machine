@@ -2,14 +2,21 @@
 
 %h2= "Showing machine \'#{@machine.name}\'"
 %img{:src => "#{machine_path(@machine)}.svg"}
-%ul
-  %li= @machine.states
-  %li= @machine.alphabet
-  %li= @machine.accept_states
-  %li= @machine.start_state
-  %li= @machine.transition_func
+/ %ul
+/   %li= @machine.states
+/   %li= @machine.alphabet
+/   %li= @machine.accept_states
+/   %li= @machine.start_state
+/   %li= @machine.transition_func
 
 %ul
-  %li= link_to 'download .dot file', machine_path(@machine, :format => 'dot')
-  %li= link_to 'edit machine', edit_machine_path(@machine)
+  %li
+    download:
+    %ul
+      - [:svg, :png, :dot].each do |f|
+        %li= link_to "#{f} file", machine_path(@machine, :format => f)
+  %li= link_to 'edit machine',   edit_machine_path(@machine)
+  %li= link_to 'delete machine', @machine, :confirm => 'Do you really want to delete this DFM?', :method => :delete
+%ul
   %li= link_to 'show all machines', machines_path
+

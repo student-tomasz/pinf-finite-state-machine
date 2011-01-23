@@ -28,7 +28,6 @@ public
     g.node[:fontcolor] = "#775500"
     g.node[:fontname]  = "Lucida Grande"
     g.node[:fontsize]  = "10"
-    g.node[:size]      = "0.1"
 
     # set edge options
     g.edge[:color]     = "#999999"
@@ -40,14 +39,13 @@ public
     g.edge[:arrowsize] = "0.5"
     
     # draw transition to start state
-    phantom_node = g.add_node('', :style => 'invisible', :width => 0.0)
-    start_node = g.add_node(start_state)
+    phantom_node = g.add_node('', :style => 'invisible', :width => 0.0, :height => 0.0)
+    start_node   = g.add_node(start_state, :shape => accept_states.include?(start_state) ? 'doublecircle' : 'circle')
     g.add_edge(phantom_node, start_node, :label => 'start', :color => '#444444')
-    start_node[:shape] = accept_states.include?(start_state) ? 'doublecircle' : 'circle'
     # draw states
-    states.reject{|state| state == start_state}.each do |state|
+    states.each do |state|
       shape = accept_states.include?(state) ? 'doublecircle' : 'circle'
-      g.add_node(state, :shape => shape)
+      g.add_node(state, :shape => shape) if state != start_state
     end
     # draw transitions
     states.each do |state|
