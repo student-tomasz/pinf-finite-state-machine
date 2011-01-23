@@ -14,6 +14,61 @@ public
   
   scope :completed, where(:step => @@steps.last)
   
+  def to_graph(format)
+    g = GraphViz.new(name)
+    
+    # set global graph options
+    g[:rankdir]    = 'LR'
+
+    # set node options
+    g.node[:color]     = "#ddaa66"
+    g.node[:style]     = "filled"
+    g.node[:fillcolor] = "#ffeecc"
+    g.node[:penwidth]  = "1"
+    g.node[:fontcolor] = "#775500"
+    g.node[:fontname]  = "Lucida Grande"
+    g.node[:fontsize]  = "10"
+    g.node[:size]      = "0.1"
+
+    # set edge options
+    g.edge[:color]     = "#999999"
+    g.edge[:penwidth]  = "1"
+    g.edge[:fontcolor] = "#444444"
+    g.edge[:fontname]  = "Lucida Grande"
+    g.edge[:fontsize]  = "8"
+    g.edge[:dir]       = "forward"
+    g.edge[:arrowsize] = "0.5"
+    
+    # draw transition to start state
+    phantom_node = g.add_node('', :style => 'invisible', :width => 0.0)
+    start_node = g.add_node(start_state)
+    g.add_edge(phantom_node, start_node, :label => 'start', :color => '#444444')
+    start_node[:shape] = accept_states.include?(start_state) ? 'doublecircle' : 'circle'
+    # draw states
+    states.reject{|state| state == start_state}.each do |state|
+      shape = accept_states.include?(state) ? 'doublecircle' : 'circle'
+      g.add_node(state, :shape => shape)
+    end
+    # draw transitions
+    states.each do |state|
+      alphabet.each do |alpha|
+        n1 = g.get_node(state)
+        n2 = g.get_node(transition_func[state][alpha])
+        edge_updated = false
+        g.each_edge do |e|
+          if e.node_one == n1.id && e.node_two == n2.id
+            info = e[:label].to_s[1..-2]
+            e[:label] = info + ", #{alpha}"
+            edge_updated = true
+          end
+        end
+        g.add_edge(n1, n2, :label => alpha) unless edge_updated
+      end
+    end
+    
+    g.output(format => String)
+  end
+  
   def self.dummy
     self.new(
       :name     => 'dummy',

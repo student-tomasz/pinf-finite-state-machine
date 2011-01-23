@@ -23,4 +23,5 @@
             %td= state
             - @machine.alphabet.each do |alpha|
               %td
-                = select_tag "machine[transition_func][#{state}][#{alpha}]", options_for_select(@machine.states, state)
+                - selected_state = @machine.transition_func[state][alpha] if @machine.transition_func && @machine.transition_func[state]
+                = select_tag "machine[transition_func][#{state}][#{alpha}]", options_for_select(@machine.states, selected_state || state)

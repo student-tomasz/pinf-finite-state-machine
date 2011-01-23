@@ -1,12 +1,15 @@
 %p#notice= notice
 
 %h2= "Showing machine \'#{@machine.name}\'"
+%img{:src => "#{machine_path(@machine)}.svg"}
 %ul
-  %li= @machine.states.to_json
-  %li= @machine.alphabet.to_json
+  %li= @machine.states
+  %li= @machine.alphabet
   %li= @machine.accept_states
   %li= @machine.start_state
   %li= @machine.transition_func
 
 %ul
-  %li= link_to 'Show all', machines_path
+  %li= link_to 'download .dot file', machine_path(@machine, :format => 'dot')
+  %li= link_to 'edit machine', edit_machine_path(@machine)
+  %li= link_to 'show all machines', machines_path
