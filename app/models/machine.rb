@@ -20,20 +20,6 @@ public
     )
   end
   
-  def humanize
-    @@serialized_attributes.each do |attribute|
-      self.send("#{attribute}=", self.send(attribute).join("\n")) if self.send(attribute).class == Array
-    end
-    self
-  end
-  
-  def dehumanize
-    @@serialized_attributes.each do |attribute|
-      self.send("#{attribute}=", self.send(attribute).split(" ")) if self.send(attribute).class == String
-    end
-    self
-  end
-  
   def step    
     self[:step] || @@steps.first
   end
@@ -48,11 +34,15 @@ public
     self.step = @@steps[i + 1]
   end
   
+  def first_step?
+    step == @@steps.first
+  end
+  
   def last_step?
     step == @@steps[-2]
   end
   
-  def completed_step?
+  def completed?
     step == @@steps[-1]
   end
 end

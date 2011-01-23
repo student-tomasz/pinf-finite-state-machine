@@ -5,45 +5,38 @@ class MachinesController < ApplicationController
 
   def show
     @machine = Machine.find(params[:id])
-    redirect_to edit_machine_path(@machine) unless @machine.completed_step?
+    redirect_to edit_machine_path(@machine) unless @machine.completed?
   end
 
   def new
-    @machine = Machine.dummy.humanize
-  end
-
-  def create
-    @machine = Machine.new(params['machine']).dehumanize
-
-    if @machine.save
-      @machine.next_step
-      redirect_to edit_machine_path(@machine), :notice => 'Machine was successfully initialized.'
-    else
-      @machine.humanize
-      render :action => "new"
-    end
+    @machine = Machine.dummy
+    @machine.save
+    redirect_to edit_machine_path(@machine)
   end
 
   def edit
-    @machine = Machine.find(params[:id]).humanize
-    @machine.step = nil if @machine.completed_step?
+    @machine = Machine.find(params[:id])
+    @machine.step = nil if @machine.completed?
   end
 
   def update
     @machine = Machine.find(params[:id])
-    
-    @machine.attributes = params['machine']
-    @machine.dehumanize
+    if @machine.first_step?
+      @machine.attributes = {
+        :name     => params['machine']['name'],
+        :states   => params['machine']['states'].split,
+        :alphabet => params['machine']['alphabet'].split
+      }
+    end
 
     if @machine.save
       @machine.next_step
-      if @machine.completed_step?
-        redirect_to @machine, :notice => 'Machine was successfully updated.'
+      if @machine.completed?
+        redirect_to @machine, :notice => 'Machine was successfully saved.'
       else
         redirect_to edit_machine_path(@machine)
       end
     else
-      @machine.humanize
       render :action => "edit"
     end
   end

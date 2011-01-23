@@ -5,4 +5,4 @@
   - [:states, :alphabet].each do |attribute|
     %li
       = f.label attribute
-      = f.text_area attribute
+      = f.text_area attribute, :value => @machine.send(attribute).join("\n")
