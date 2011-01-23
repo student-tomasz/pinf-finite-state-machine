@@ -16,9 +16,12 @@ ActiveRecord::Schema.define(:version => 20110122225115) do
     t.string   "name"
     t.string   "states"
     t.string   "alphabet"
+    t.string   "accept_states"
+    t.string   "start_state"
+    t.text     "transition_func"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "step",       :default => "initialize"
+    t.string   "step"
   end
 
 end
