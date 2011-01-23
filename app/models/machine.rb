@@ -1,6 +1,6 @@
 class Machine < ActiveRecord::Base
 private
-  @@serialized_attributes = [:states, :alphabet]
+  @@serialized_attributes = [:states, :alphabet, :accept_states, :start_state, :transition_func]
   @@steps = ['initialize', 'accept', 'complete']
 
 public

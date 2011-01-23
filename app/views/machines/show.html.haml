@@ -2,8 +2,11 @@
 
 %h2= "Showing machine \'#{@machine.name}\'"
 %ul
-  %li= @machine.states.to_json + " " + @machine.states.class.to_s
-  %li= @machine.alphabet.to_json + " " + @machine.states.class.to_s
+  %li= @machine.states.to_json
+  %li= @machine.alphabet.to_json
+  %li= @machine.accept_states
+  %li= @machine.start_state
+  %li= @machine.transition_func
 
 %ul
   %li= link_to 'Show all', machines_path

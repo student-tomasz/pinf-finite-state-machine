@@ -27,6 +27,8 @@ class MachinesController < ApplicationController
         :states   => params['machine']['states'].split,
         :alphabet => params['machine']['alphabet'].split
       }
+    else
+      @machine.attributes = params['machine']
     end
 
     if @machine.save
