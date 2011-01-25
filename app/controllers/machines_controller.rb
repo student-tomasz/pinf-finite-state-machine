@@ -9,14 +9,9 @@ class MachinesController < ApplicationController
     
     respond_to do |format|
       format.html { }
-      format.svg {
-        send_data @machine.to_graph(:svg), :filename => "#{@machine.name}.svg", :type => 'image/svg+xml', :disposition => 'inline'
-      }
-      format.png {
-        send_data @machine.to_graph(:png), :filename => "#{@machine.name}.png", :type => 'image/png', :disposition => 'inline'
-      }
-      format.dot {
-        send_data @machine.to_graph(:dot), :filename => "#{@machine.name}.dot", :type => 'text/plain', :disposition => 'attachment'
+      format.any(:svg, :png, :dot) {
+        f = params[:format].to_sym
+        send_data @machine.to_graph(f), :filename => "#{@machine.name}.#{f}", :type => f
       }
     end
   end
@@ -41,6 +36,7 @@ class MachinesController < ApplicationController
         :alphabet => params['machine']['alphabet'].split
       }
     else
+      params['machine']['accept_states'] ||= {}
       @machine.attributes = params['machine']
     end
 
