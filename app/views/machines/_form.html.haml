@@ -7,7 +7,7 @@
           %li= msg
   
   #fields
-    = render "#{@machine.step}_fields", :f => f
+    = render "#{@machine.step.to_s}_fields", :f => f
 
   #actions
     = f.submit @machine.last_step? ? "Submit" : "Continue"

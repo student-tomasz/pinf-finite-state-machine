@@ -1,7 +1,7 @@
 class Machine < ActiveRecord::Base
 private
   @@serialized_attributes = [:states, :alphabet, :accept_states, :start_state, :transition_func]
-  @@steps = ['initialize', 'accept', 'complete']
+  @@steps = [:initialize, :accept, :complete]
 
 public
   before_save JsonWrapper.new(@@serialized_attributes)
@@ -76,7 +76,8 @@ public
   end
   
   def step    
-    self[:step] || @@steps.first
+    s = self[:step].blank? ? @@steps.first : self[:step]
+    s.to_sym
   end
 
   def step=(value)
