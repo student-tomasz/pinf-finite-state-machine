@@ -11,7 +11,7 @@ class MachinesController < ApplicationController
       format.html { }
       format.any(:svg, :png, :dot) {
         f = params[:format].to_sym
-        send_data @machine.to_graph(f), :filename => "#{@machine.name}.#{f}", :type => f
+        send_data @machine.to_graph.output(f => String), :filename => "#{@machine.name}.#{f}", :type => f
       }
     end
   end

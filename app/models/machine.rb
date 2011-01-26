@@ -14,7 +14,7 @@ public
   
   scope :completed, where(:step => @@steps.last)
   
-  def to_graph(format)
+  def to_graph
     g = GraphViz.new(name)
     
     # set global graph options
@@ -63,8 +63,7 @@ public
         g.add_edge(n1, n2, :label => alpha) unless edge_updated
       end
     end
-    
-    g.output(format => String)
+    g
   end
   
   def self.dummy
