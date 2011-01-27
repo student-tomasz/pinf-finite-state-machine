@@ -12,6 +12,10 @@ public
   validates_presence_of :states
   validates_presence_of :alphabet
   
+  has_attached_file :graph
+  
+  attr_protected :graph, :graph_file_name, :graph_content_type, :graph_file_size
+  
   scope :completed, where(:step => @@steps.last)
   
   def process_word(word = [""])
@@ -70,6 +74,14 @@ public
       end
     end
     g
+  end
+  
+  def generate_graph
+    File.open(File.join(Rails.root, "tmp", "#{Time.now.to_i}_#{self.id}.svg"), 'w+') do |file|
+      file << self.to_graph.output(:svg => String)
+      self.graph = file
+      self.save
+    end
   end
   
   def self.dummy

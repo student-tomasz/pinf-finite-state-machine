@@ -49,6 +49,7 @@ class MachinesController < ApplicationController
     if @machine.save
       @machine.next_step
       if @machine.completed?
+        @machine.generate_graph
         redirect_to @machine, :notice => 'Machine was successfully saved.'
       else
         redirect_to edit_machine_path(@machine)
