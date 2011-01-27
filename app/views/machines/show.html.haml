@@ -1,13 +1,12 @@
-%p#notice= notice
-
 %h2= "Showing machine \'#{@machine.name}\'"
+
 %img{:src => "#{machine_path(@machine)}.svg"}
-/ %ul
-/   %li= @machine.states
-/   %li= @machine.alphabet
-/   %li= @machine.accept_states
-/   %li= @machine.start_state
-/   %li= @machine.transition_func
+
+= form_tag(process_word_path(@machine), :method => :post) do |f|
+  %ul
+    %li
+      %label{:for => 'machine_word'} word for the machine to process
+      %input{:type => 'textfield', :id => 'machine_word', :name => 'machine[word]'}
 
 %ul
   %li

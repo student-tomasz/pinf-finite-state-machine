@@ -14,34 +14,40 @@ public
   
   scope :completed, where(:step => @@steps.last)
   
+  def process_word(word = [""])
+      @graph_log = []
+      prev_state = nil
+      curr_state = nil
+      g = self.to_graph
+      
+      # null input
+      prev_state = nil
+      curr_state = start_state
+      g.mark(prev_state, curr_state)
+      @graph_log << Hpricot(g.output(:svg => String)).at('svg').to_s
+      
+      word.each do |alpha|
+        g.unmark(prev_state, curr_state)
+        prev_state = curr_state
+        curr_state = self.transition_func[prev_state][alpha]
+        if curr_state
+          g.mark(prev_state, curr_state)
+          @graph_log << Hpricot(g.output(:svg => String)).at('svg').to_s
+        else
+          break
+        end
+      end
+      
+      return @graph_log, self.accept_states.include?(curr_state)
+    end
+  
   def to_graph
-    g = GraphViz.new(name)
-    
-    # set global graph options
-    g[:rankdir]    = 'LR'
-
-    # set node options
-    g.node[:color]     = "#ddaa66"
-    g.node[:style]     = "filled"
-    g.node[:fillcolor] = "#ffeecc"
-    g.node[:penwidth]  = "1"
-    g.node[:fontcolor] = "#775500"
-    g.node[:fontname]  = "Lucida Grande"
-    g.node[:fontsize]  = "10"
-
-    # set edge options
-    g.edge[:color]     = "#999999"
-    g.edge[:penwidth]  = "1"
-    g.edge[:fontcolor] = "#444444"
-    g.edge[:fontname]  = "Lucida Grande"
-    g.edge[:fontsize]  = "8"
-    g.edge[:dir]       = "forward"
-    g.edge[:arrowsize] = "0.5"
+    g = GraphViz.digraph(name).apply_global_styles
     
     # draw transition to start state
-    phantom_node = g.add_node('', :style => 'invisible')
+    phantom_node = g.add_node('', :style => 'invisible', :width => 0.0, :height => 0.0)
     start_node   = g.add_node(start_state, :shape => accept_states.include?(start_state) ? 'doublecircle' : 'circle')
-    g.add_edge(phantom_node, start_node, :label => 'start', :color => '#444444')
+    g.add_edge(phantom_node, start_node, :label => 'start')
     # draw states
     states.each do |state|
       shape = accept_states.include?(state) ? 'doublecircle' : 'circle'

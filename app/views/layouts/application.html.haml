@@ -9,5 +9,9 @@
   %body
     %header
       %h1= link_to 'MachineJam', root_path
+      - if alert
+        %p#alert= alert
+      - elsif notice
+        %p#notice= notice
     %section
       = yield

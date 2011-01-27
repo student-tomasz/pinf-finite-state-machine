@@ -1,6 +1,7 @@
 MachineJam::Application.routes.draw do
   root :to => "machines#index"
   resources :machines
+  match 'machines/:id/process_word' => 'machines#process_word', :as => 'process_word'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

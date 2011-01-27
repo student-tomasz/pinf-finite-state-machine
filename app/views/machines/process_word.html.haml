@@ -1,0 +1,26 @@
+%h2= "Processing word with \'#{@machine.name}\' machine"
+
+%ol
+  - @states_log.each_with_index do |state, i|
+    :ruby
+      if i == 0
+        caption = 'start'
+      else
+        caption = @word.clone
+        caption[i-1] = "<strong>#{@word[i-1]}</strong>"
+        caption = caption.join(' ')
+      end
+    %li
+      %p!= caption
+      != state
+
+= form_tag(process_word_path(@machine), :method => :post) do |f|
+  %ul
+    %li
+      %label{:for => 'machine_word'}= "machine " + (@accepted ? "accepted" : "didn\'t accept") + " the word"
+      %input{:type => 'textfield', :id => 'machine_word', :name => 'machine[word]', :value => @word.join(' ')}
+
+%ul
+  %li= link_to 'show the machine', @machine
+  %li= link_to 'show all machines', machines_path
+  
