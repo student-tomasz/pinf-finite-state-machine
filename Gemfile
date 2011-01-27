@@ -9,7 +9,7 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'haml',      '~> 3.0.25'
 gem 'paperclip', '~> 2.3'
 
-gem 'ruby-graphviz'
+gem 'ruby-graphviz', :require => 'graphviz'
 gem 'hpricot'
 
 # Use unicorn as the web server
