@@ -8,42 +8,39 @@ public
   after_save  JsonWrapper.new(@@serialized_attributes)
   after_find  JsonWrapper.new(@@serialized_attributes)
   
-  validates_presence_of :name
-  validates_presence_of :states
-  validates_presence_of :alphabet
+  validates_presence_of :name, :states, :alphabet
   
   has_attached_file :graph
-  
   attr_protected :graph, :graph_file_name, :graph_content_type, :graph_file_size
   
   scope :completed, where(:step => @@steps.last)
   
   def process_word(word = [""])
-      @graph_log = []
-      prev_state = nil
-      curr_state = nil
-      g = self.to_graph
-      
-      # null input
-      prev_state = nil
-      curr_state = start_state
-      g.mark(prev_state, curr_state)
-      @graph_log << Hpricot(g.output(:svg => String)).at('svg').to_s
-      
-      word.each do |alpha|
-        g.unmark(prev_state, curr_state)
-        prev_state = curr_state
-        curr_state = self.transition_func[prev_state][alpha]
-        if curr_state
-          g.mark(prev_state, curr_state)
-          @graph_log << Hpricot(g.output(:svg => String)).at('svg').to_s
-        else
-          break
-        end
+    @graph_log = []
+    prev_state = nil
+    curr_state = nil
+    g = self.to_graph
+    
+    # null input
+    prev_state = nil
+    curr_state = start_state
+    g.mark(prev_state, curr_state)
+    @graph_log << Hpricot(g.output(:svg => String)).at('svg').to_s
+    
+    word.each do |alpha|
+      g.unmark(prev_state, curr_state)
+      prev_state = curr_state
+      curr_state = self.transition_func[prev_state][alpha]
+      if curr_state
+        g.mark(prev_state, curr_state)
+        @graph_log << Hpricot(g.output(:svg => String)).at('svg').to_s
+      else
+        break
       end
-      
-      return @graph_log, self.accept_states.include?(curr_state)
     end
+    
+    return @graph_log, self.accept_states.include?(curr_state)
+  end
   
   def to_graph
     g = GraphViz.digraph(name).apply_global_styles
