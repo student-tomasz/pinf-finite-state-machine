@@ -1,6 +1,10 @@
 MachineJam::Application.routes.draw do
   root :to => "machines#index"
-  resources :machines
+  
+  resources :machines, :exclude => [:create]
+  # ['basic', 'logic'].each do |step|
+  #   match "machines/:id/edit/#{step}" => "machines#edit_#{step}", :as => "edit_machine_#{step}"
+  # end
   match 'machines/:id/process_word' => 'machines#process_word', :as => 'process_word'
 
   # The priority is based upon order of creation:

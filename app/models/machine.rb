@@ -1,7 +1,7 @@
 class Machine < ActiveRecord::Base
 private
   @@serialized_attributes = [:states, :alphabet, :accept_states, :start_state, :transition_func]
-  @@steps = [:initialize, :accept, :complete]
+  @@steps = [:basic, :logic, :complete]
 
 public
   before_save JsonWrapper.new(@@serialized_attributes)

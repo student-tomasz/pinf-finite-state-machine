@@ -29,13 +29,13 @@ class MachinesController < ApplicationController
 
   def edit
     @machine = Machine.find(params[:id])
-    @machine.step = :initialize if @machine.completed?
+    @machine.step = @machine.first_step if @machine.completed?
   end
 
 
   def update # TODO: cleanup this mess
     @machine = Machine.find(params[:id])
-    if @machine.step == :initialize
+    if @machine.step == :basic
       @machine.attributes = {
         :name     => params['machine']['name'].gsub(/\s/, '_'),
         :states   => params['machine']['states'].split,
