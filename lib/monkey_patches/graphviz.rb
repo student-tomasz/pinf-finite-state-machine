@@ -67,7 +67,6 @@ public
     [:graph, :node, :edge].each do |elem|
       self.class.class_eval("@@#{elem}_opts")[:default].each { |k, v| self.send(elem)[k] = v }
     end
-    self
   end
   
   def mark(from, to)

@@ -43,7 +43,8 @@ public
   end
   
   def to_graph
-    g = GraphViz.digraph(name).apply_global_styles
+    g = GraphViz.digraph(name)
+    g.apply_global_styles
     # draw transition to start state
     phantom_node = g.add_node('', :style => 'invisible', :width => 0.0, :height => 0.0)
     start_node   = g.add_node(start_state, :shape => accept_states.include?(start_state) ? 'doublecircle' : 'circle')
