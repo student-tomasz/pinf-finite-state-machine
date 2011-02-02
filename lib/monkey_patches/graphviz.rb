@@ -51,11 +51,11 @@ private
   end
   
   def mark_on_status(from, to, status = :visited)
-    tail = self.get_node(from) || self.get_node('')
+    tail = self.get_node(from)
     head = self.get_node(to)
     apply_style(head, status)
     self.each_edge do |edge|
-      if (edge.node_one == tail.id && edge.node_two == head.id) || tail.id == ''
+      if edge.node_one == tail.id && edge.node_two == head.id
         apply_style(edge, status)
         break
       end
@@ -70,10 +70,10 @@ public
   end
   
   def mark(from, to)
-   mark_on_status(from, to, :active)
+    mark_on_status(from, to, :active)
   end
   
   def unmark(from, to)
-   mark_on_status(from, to, :visited)
+    mark_on_status(from, to, :visited)
   end
 end
