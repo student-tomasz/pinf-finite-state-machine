@@ -1,6 +1,6 @@
 class Machine < ActiveRecord::Base
 private
-  @@serialized_attributes = [:states, :alphabet, :accept_states, :start_state, :transition_func]
+  @@serialized_attributes = [:states, :alphabet, :transition_func, :start_state, :accept_states]
   @@steps = [:basic, :logic, :complete]
 
 public
@@ -13,7 +13,7 @@ public
   has_attached_file :graph
   attr_protected :graph, :graph_file_name, :graph_content_type, :graph_file_size
   
-  scope :completed, where(:step => @@steps.last)
+  scope :complete, where(:step => @@steps.last)
   
   def process_word(word = [""])
     @graph_log = []
@@ -44,7 +44,6 @@ public
   
   def to_graph
     g = GraphViz.digraph(name).apply_global_styles
-    
     # draw transition to start state
     phantom_node = g.add_node('', :style => 'invisible', :width => 0.0, :height => 0.0)
     start_node   = g.add_node(start_state, :shape => accept_states.include?(start_state) ? 'doublecircle' : 'circle')
@@ -70,7 +69,7 @@ public
         g.add_edge(n1, n2, :label => alpha) unless edge_updated
       end
     end
-    g
+    return g
   end
   
   def generate_graph
@@ -81,15 +80,15 @@ public
     end
   end
   
-  def self.dummy
-    self.new(
+  def self.create_dummy
+    self.create(
       :name     => 'dummy',
       :states   => ['a', 'b', 'c'],
       :alphabet => ['1', '2']
     )
   end
   
-  def step    
+  def step
     s = self[:step].blank? ? @@steps.first : self[:step]
     s.to_sym
   end
@@ -104,15 +103,23 @@ public
     self.step = @@steps[i + 1]
   end
   
-  def first_step?
-    step == @@steps.first
-  end
-  
-  def last_step?
-    step == @@steps[-2]
-  end
-  
-  def completed?
-    step == @@steps.last
+  def update_part_of_attributes(params)
+    result = false
+    case self.step
+    when :basic
+      result = self.update_attributes({
+        :name     => params['name'].gsub(/\s/, '_'),
+        :states   => params['states'].split,
+        :alphabet => params['alphabet'].split
+      })
+    when :logic
+      result = self.update_attributes({
+        :transition_func => params['transition_func'],
+        :start_state     => params['start_state'],
+        :accept_states   => params['accept_states'] || []
+      })
+    end
+    self.next_step if result
+    result
   end
 end
