@@ -76,4 +76,8 @@ public
   def unmark(from, to)
     mark_on_status(from, to, :visited)
   end
+  
+  def to_svg
+    Hpricot(self.output(:svg => String)).at('svg').to_s
+  end
 end

@@ -1,6 +1,6 @@
 %h2= "Showing machine \'#{@machine.name}\'"
 
-%img{:src => "#{machine_path(@machine)}.svg"}
+!= @machine.to_graph.to_svg
 
 = form_tag(process_word_path(@machine), :method => :post) do |f|
   %ul

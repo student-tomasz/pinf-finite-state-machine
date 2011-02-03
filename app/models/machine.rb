@@ -21,7 +21,7 @@ public
     prev_state = 'nil'
     curr_state = start_state
     graph.mark(prev_state, curr_state)
-    @graph_log << Hpricot(graph.output(:svg => String)).at('svg').to_s
+    @graph_log << graph.to_svg
     
     word.each do |alpha|
       graph.unmark(prev_state, curr_state)
@@ -29,7 +29,7 @@ public
       curr_state = transition_func[prev_state][alpha]
       if !curr_state.blank?
         graph.mark(prev_state, curr_state)
-        @graph_log << Hpricot(graph.output(:svg => String)).at('svg').to_s
+        @graph_log << graph.to_svg
       else
         break
       end
