@@ -30,6 +30,8 @@ GEM
     activesupport (3.0.3)
     arel (2.0.7)
     builder (2.1.2)
+    compass (0.10.6)
+      haml (>= 3.0.4)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     haml (3.0.25)
@@ -41,9 +43,6 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
-    paperclip (2.3.8)
-      activerecord
-      activesupport
     polyglot (0.3.1)
     rack (1.2.1)
     rack-mount (0.6.13)
@@ -77,9 +76,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  compass (~> 0.10.6)
   haml (~> 3.0.25)
   hpricot
-  paperclip (~> 2.3)
   rails (= 3.0.3)
   ruby-graphviz
   sqlite3-ruby

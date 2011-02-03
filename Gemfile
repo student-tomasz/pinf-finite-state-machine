@@ -7,7 +7,7 @@ gem 'rails', '3.0.3'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'haml', '~> 3.0.25'
-gem 'paperclip', '~> 2.3'
+gem 'compass', '~> 0.10.6'
 
 gem 'ruby-graphviz', :require => 'graphviz'
 gem 'hpricot'
