@@ -10,22 +10,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110127122634) do
+ActiveRecord::Schema.define(:version => 20110122225115) do
 
   create_table "machines", :force => true do |t|
     t.string   "name"
     t.string   "states"
     t.string   "alphabet"
-    t.string   "accept_states"
-    t.string   "start_state"
     t.text     "transition_func"
+    t.string   "start_state"
+    t.string   "accept_states"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "step"
-    t.string   "graph_file_name"
-    t.string   "graph_content_type"
-    t.integer  "graph_file_size"
-    t.datetime "graph_updated_at"
   end
 
 end

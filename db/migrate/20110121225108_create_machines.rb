@@ -4,9 +4,9 @@ class CreateMachines < ActiveRecord::Migration
       t.string :name
       t.string :states
       t.string :alphabet
-      t.string :accept_states
-      t.string :start_state
       t.text   :transition_func
+      t.string :start_state
+      t.string :accept_states
 
       t.timestamps
     end
