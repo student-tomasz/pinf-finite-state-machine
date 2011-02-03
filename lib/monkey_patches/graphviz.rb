@@ -1,3 +1,5 @@
+require 'hpricot'
+
 class GraphViz
 private
   @@graph_opts = {
@@ -21,6 +23,7 @@ private
       :penwidth  => "2"
     },
     :visited => {
+      :color     => "#9C5400",
       :penwidth  => "1"
     }
   }
@@ -40,17 +43,20 @@ private
       :penwidth  => "2"
     },
     :visited => {
+      :color     => "#9C5400",
       :penwidth  => "1"
     }
   }
   
   # TODO: make accessor that takes a hash of new attributes
   def apply_style(element, style)
-    opts = "@@#{element.class.to_s.downcase.split('::').last}_opts"
-    self.class.class_eval(opts)[style].each { |k, v| element[k] = v }
+    klass_options = "@@#{element.class.to_s.downcase.split('::').last}_opts"
+    default_options = self.class.class_eval(klass_options)[:default]
+    style_options = self.class.class_eval(klass_options)[style]
+    default_options.merge(style_options).each { |k, v| element[k] = v }
   end
   
-  def mark_on_status(from, to, status = :visited)
+  def mark_on_status(from, to, status = :default)
     tail = self.get_node(from)
     head = self.get_node(to)
     apply_style(head, status)
