@@ -48,6 +48,6 @@ class MachinesController < ApplicationController
   
   def process_word
     @machine = Machine.find(params[:id])
-    @states_log, @accepted = @machine.process_word(@word = params['machine']['word'].split)
+    @graph_log, @accepted = @machine.process_word(@word = params['machine']['word'].split)
   end
 end

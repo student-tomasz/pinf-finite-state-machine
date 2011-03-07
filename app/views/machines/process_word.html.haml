@@ -1,26 +1,21 @@
-%h2= "Processing word with \'#{@machine.name}\' machine"
+- title "Processing word with \'#{@machine.name}\' machine"
 
-%ol
-  - @states_log.each_with_index do |state, i|
-    :ruby
-      if i == 0
-        caption = 'start'
-      else
-        caption = @word.clone
-        caption[i-1] = "<strong>#{@word[i-1]}</strong>"
-        caption = caption.join(' ')
-      end
-    %li
-      %p!= caption
-      != state
+- content_for :places do
+  %li= link_to '« show the machine', @machine
 
-= form_tag(process_word_path(@machine), :method => :post) do |f|
-  %ul
+%div#states
+  %div.states_container
+    - @graph_log.each_with_index do |graph, i|
+      %div.state
+        %div.graph!= graph
+        %p.caption!= "input: #{caption(@word, i)}"
+  %div.states_controls
+    %a.prev= "« prev"
+    %a.next= "next »"
+
+= form_tag(process_word_path(@machine), :class => 'process_word_machine') do |f|
+  %ol
     %li
       %label{:for => 'machine_word'}= "machine " + (@accepted ? "accepted" : "didn\'t accept") + " the word"
       %input{:type => 'textfield', :id => 'machine_word', :name => 'machine[word]', :value => @word.join(' ')}
 
-%ul
-  %li= link_to 'show the machine', @machine
-  %li= link_to 'show all machines', machines_path
-  

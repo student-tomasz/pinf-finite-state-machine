@@ -1,0 +1,110 @@
+body form {
+  margin: 0;
+
+  & > ol, & .fields > ol {
+    @include no-bullets;
+    margin: 0;
+    padding: 0;
+
+    & > li {
+      border-bottom: 1px solid #eee;
+      margin-bottom: -1px;
+
+      // &:last-child {
+      //   border-bottom: none;
+      //   margin-bottom: 0;
+      // }
+    }
+  }
+
+  label, legend {
+    display: block;
+    font-weight: bold;
+    margin: 9px 18px;
+    padding: 0;
+  }
+
+  select {
+    margin: 9px 18px;
+    padding: 0;
+
+    &#machine_start_state { // hate to specify this, but can't get it to work otherwise
+      margin-top: 0;
+    }
+  }
+
+  ol.accept_states_set {
+    margin: 0;
+    padding: 0;
+
+    & > li {
+      label {
+        display: inline;
+        font-weight: normal;
+        margin-left: 0;
+      }
+    }
+  }
+
+  input[type='checkbox'] {
+    margin: 9px 18px;
+    margin-right: 4.5px;
+  }
+
+  input[type='textfield'], input[type='text'], textarea {
+    background: #fff;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 15%, from(#efefef), to(#fff));
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: block;
+    font-size: 1em;
+    margin: 9px;
+    padding: 9px - 1px;
+    height: 18px;
+    width: $machinejam-body-width - 2 * 9px - 2 * 9px - 2px;
+  }
+
+  textarea {
+    height: 90px;
+  }
+
+  table {
+    margin: 9px 18px;
+    width: 0;
+
+    th {
+      background: none;
+      font-weight: normal;
+    }
+
+    th, tr, td {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+
+      select {
+        margin: 4.5px 9px;
+      }
+    }
+  }
+
+  div#error_explanation {
+    @include error;
+    border-radius: 4px;
+  }
+
+  input[type='submit'] {
+    margin: 18px;
+  }
+}
+
+body form.process_word_machine {
+  border-top: 1px solid #ddd;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  margin-top: 9px - 1px;
+
+  ol > li {
+    border: none;
+  }
+}

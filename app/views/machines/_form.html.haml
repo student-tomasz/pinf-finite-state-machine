@@ -5,9 +5,7 @@
       %ul
         - @machine.errors.full_messages.each do |msg|
           %li= msg
-  
-  #fields
+  .fields
     = render "#{@machine.step.to_s}_fields", :f => f
-
-  #actions
+  .submits
     = f.submit "Submit #{@machine.step} attributes"

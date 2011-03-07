@@ -1,0 +1,24 @@
+html {
+  background: #eee image-url('bg.jpg') repeat-x fixed top;
+		body {
+			@include blueprint-typography(true);
+
+			background: none;
+			margin: 1em auto;
+			overflow: visible;
+			width: $machinejam-body-width;
+			// width: ($blueprint-grid-columns * ($blueprint-grid-width + $blueprint-grid-margin)) - $blueprint-grid-margin;
+
+			h1, h2, h3, h4, h5, h6 {
+				font-family: $blueprint-headers-font-family;
+			}
+
+			a {
+				@include hover-link;
+				&:active {
+					position: relative;
+					top: 1px;
+				}
+			}
+		}
+

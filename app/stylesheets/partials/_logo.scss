@@ -1,0 +1,18 @@
+#logo {
+  & > a {
+  // display: inline-block;
+  text-shadow: -1px -1px 0 #fff,
+                1px -1px 0 #fff,
+               -1px  1px 0 #fff,
+                1px  1px 0 #fff;
+  // text-shadow: 1px 1px 0 #eee, 2px 2px 0 #08c;
+  // &:hover {
+  //   text-shadow: 1px 1px 0 #eee, 2px 2px 0 #333;
+  // }
+  }
+
+  // & > span {
+  //   display: inline-block;
+  // }
+}
+

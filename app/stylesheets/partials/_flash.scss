@@ -1,0 +1,16 @@
+p.notice, p.flash, p.alert {
+	border-radius: 4px;
+}
+
+p.notice {
+	@include success;
+}
+	
+p.flash {
+	@include notice;
+}
+
+p.alert {
+	@include error;
+}
+

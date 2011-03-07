@@ -1,0 +1,11 @@
+$machinejam-body-width: 760px;
+
+// override fonts
+$blueprint-font-family: "Lucida Sans Unicode", "Lucida Grande", #{$blueprint-font-family};
+$blueprint-headers-font-family: "Yanone Kaffeesatz", #{$blueprint-font-family};
+
+// override colors
+$link-color: #08c;
+$link-visited-color: $link-color;
+$link-active-color: $link-hover-color;
+

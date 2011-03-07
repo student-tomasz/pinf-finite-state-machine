@@ -3,12 +3,14 @@
     = f.label :start_state
     = f.select :start_state, @machine.states
   %li
-    = field_set_tag 'Accept states set' do
+    = label_tag nil, 'Accept states set'
+    %ol.accept_states_set
       - @machine.states.each do |state|
         - checked = (@machine.accept_states.include?(state) if @machine.accept_states)
         - id = "machine_accept_state_#{state}"
-        = check_box_tag 'machine[accept_states][]', state, checked, :id => id
-        = label_tag id, state
+        %li
+          = check_box_tag 'machine[accept_states][]', state, checked, :id => id
+          = label_tag id, state
   %li
     = f.label 'Transition function table'
     %table

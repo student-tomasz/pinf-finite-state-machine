@@ -1,7 +1,11 @@
-%h2 Listing machines
-%ol
-  - @machines.each do |machine|
-    %li= link_to machine.name, machine
+- title "Listing machines"
 
-%ul
-  %li= link_to 'define new DFM', new_machine_path
+%ul#listing
+  - @machines.each do |machine|
+    %li.machine
+      = link_to machine.name, machine
+      %ul.actions
+        %li= link_to 'edit machine', edit_machine_path(machine)
+        %li= link_to 'delete machine', machine, :confirm => 'Do you really want to delete this DFM?', :method => :delete
+  %li#new_machine= link_to 'create new machine', new_machine_path
+

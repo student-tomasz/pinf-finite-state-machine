@@ -1,21 +1,16 @@
-%h2= "Showing machine \'#{@machine.name}\'"
+- title "Showing machine \'#{@machine.name}\'"
 
-!= @machine.to_graph.to_svg
+- content_for :places do
+  %li= link_to "« show all machines", machines_path
 
-= form_tag(process_word_path(@machine), :method => :post) do |f|
-  %ul
+%div#states
+  %div.states_container
+    %div.state
+      %div.graph!= @machine.to_graph.to_svg
+
+= form_tag(process_word_path(@machine), :class => 'process_word_machine') do |f|
+  %ol
     %li
-      %label{:for => 'machine_word'} word for the machine to process
+      %label{:for => 'machine_word'} word for the machine to process:
       %input{:type => 'textfield', :id => 'machine_word', :name => 'machine[word]'}
-
-%ul
-  %li
-    download:
-    %ul
-      - [:svg, :png, :dot].each do |f|
-        %li= link_to "#{f} file", machine_path(@machine, :format => f)
-  %li= link_to 'edit machine',   edit_machine_path(@machine)
-  %li= link_to 'delete machine', @machine, :confirm => 'Do you really want to delete this DFM?', :method => :delete
-%ul
-  %li= link_to 'show all machines', machines_path
 

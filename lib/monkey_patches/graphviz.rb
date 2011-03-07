@@ -4,7 +4,9 @@ class GraphViz
 private
   @@graph_opts = {
     :default => {
-      :rankdir   => 'LR'
+      :rankdir   => 'LR',
+      :dpi       => '72',
+      :size      => '7.5'
     }
   }
 

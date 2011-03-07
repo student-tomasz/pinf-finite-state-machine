@@ -1,0 +1,7 @@
+body > nav {
+	ul {
+		padding: 0;
+		@include no-bullets;
+	}
+}
+

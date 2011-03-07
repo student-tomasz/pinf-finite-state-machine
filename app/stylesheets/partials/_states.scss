@@ -1,0 +1,20 @@
+#states {
+  margin: 18px;
+
+  .state {
+    .caption {
+      span.current {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .states_controls {
+    display: none;
+
+    .prev, .next {
+      cursor: pointer;
+    }
+  }
+}
+
