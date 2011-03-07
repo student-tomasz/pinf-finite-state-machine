@@ -18,7 +18,7 @@ public
     curr_state = nil
     graph = self.to_graph
     
-    prev_state = 'nil'
+    prev_state = 'nil' # hardcoded phantom node
     curr_state = start_state
     graph.mark(prev_state, curr_state)
     @graph_log << graph.to_svg
@@ -26,7 +26,7 @@ public
     word.each do |alpha|
       graph.unmark(prev_state, curr_state)
       prev_state = curr_state
-      curr_state = transition_func[prev_state][alpha]
+      curr_state = transition_func[prev_state] ? transition_func[prev_state][alpha] : nil
       if !curr_state.blank?
         graph.mark(prev_state, curr_state)
         @graph_log << graph.to_svg
